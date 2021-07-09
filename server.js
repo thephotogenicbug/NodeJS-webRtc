@@ -7,10 +7,10 @@ const port = process.env.PORT;
 const app = express();
 const server = http.createServer(app);
 const Routes = require("./app/routes");
+app.use(express.json());
 
-
+app.use(cors())
 app.use([
-    cors(),
     bodyParser.json(),
     bodyParser.urlencoded({extended:false}),
     Routes
