@@ -8,6 +8,7 @@ const app = express();
 const server = http.createServer(app);
 const Routes = require("./app/routes");
 
+app.use(cors())
 
 app.use([
     bodyParser.json(),
@@ -15,19 +16,7 @@ app.use([
     Routes
 ])
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.header("Access-Control-Allow-Headers", "Content-Type");
-    res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
-    next();
-  });
-
-const io = require("socket.io")(server, {
-    cors: {
-      origin: '*',
-    }
-});
+const io = require("socket.io")(server)
 const socketManager = require("./app/socketManager");
 io.on("connection", socketManager);
 
