@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors")
 const port = process.env.PORT;
 const app = express();
-const server = http.createServer(app);
+const httpServer = http.createServer(app);
 const Routes = require("./app/routes");
 
 app.use(cors())
@@ -16,11 +16,18 @@ app.use([
     Routes
 ])
 
-const io = require("socket.io")(server)
+const io = require("socket.io")(httpServer, {
+    cors: {
+      origin: "https://webrtc-beta-steel.vercel.app/",
+      methods: ["GET", "POST"]
+    }
+  });
+  
+
 const socketManager = require("./app/socketManager");
 io.on("connection", socketManager);
 
-server.listen(port, ()=>{
+httpServer.listen(port, ()=>{
     console.log(`Server is running on port ${port}`);
 })
 
