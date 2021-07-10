@@ -18,7 +18,7 @@ app.use([
 
 const io = require("socket.io")(httpServer, {
     cors: {
-      origin: "https://webrtc-beta-steel.vercel.app/",
+      origin: "https://webrtc-beta-steel.vercel.app",
       methods: ["GET", "POST"]
     }
   });
